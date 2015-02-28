@@ -24,7 +24,6 @@
 */
 
 #include <QTextStream>
-#include <QHostAddress>
 #include <QUdpSocket>
 #include <QThread> // for usleep
 
@@ -54,7 +53,7 @@ int main(void) {
     }
     else {
       // don't eat CPU
-      udpSocket.thread()->usleep(1e5); // 1e6 == 1 second
+      udpSocket.thread()->usleep(1e3); // 1e6 == 1 second
       // Maybe the Qt event handling would make sense instead of this.
     }
   }
