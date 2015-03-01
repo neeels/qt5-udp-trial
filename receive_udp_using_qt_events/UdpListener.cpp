@@ -1,6 +1,8 @@
 #include "UdpListener.h"
 
-UdpListener::UdpListener(QTextStream *out, int port)
+UdpListener::UdpListener(QTextStream *out, int port,
+                         QObject *parent)
+  : QObject(parent)
 {
   this->out = out;
   this->port = port;
