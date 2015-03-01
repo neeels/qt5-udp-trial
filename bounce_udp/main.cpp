@@ -62,6 +62,10 @@ int main(void) {
         sendUdpDatagram("127.0.0.1", 1338, datagram);
         sendUdpDatagram("127.0.0.1", 1339, datagram);
       }
+      else
+      if (redirectToken.compare("BAR") == 0) {
+        sendUdpDatagram("::1", 1340, datagram);
+      }
 
     }
     else {
