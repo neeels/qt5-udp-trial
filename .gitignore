@@ -26,6 +26,7 @@
 hello_world/hello_world
 hello_event/hello_event
 receive_udp/receive_udp
+receive_udp_using_qt_events/receive_udp
 *.exe
 *.out
 *.app
