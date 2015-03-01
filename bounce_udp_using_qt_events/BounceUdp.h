@@ -15,6 +15,8 @@ class BounceUdp : public QObject
      */
     BounceUdp(QTextStream *out, int listenPort, QObject *parent=0);
 
+    ~BounceUdp();
+
     /*! Open a socket. Return false if binding to the socket failed.
         The socket is managed internally.
      */ 

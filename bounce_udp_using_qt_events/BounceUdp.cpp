@@ -6,8 +6,14 @@ BounceUdp::BounceUdp(QTextStream *out, int listenPort,
   : QObject(parent)
 {
   this->out = out;
+  Q_CHECK_PTR(this->out);
   this->listenPort = listenPort;
   this->listenSocket = NULL;
+}
+
+BounceUdp::~BounceUdp()
+{
+  close();
 }
 
 bool BounceUdp::bind() {
@@ -85,9 +91,12 @@ void BounceUdp::sendUdpDatagram(const char *toAddress, int port, QByteArray &dat
 
 
 void BounceUdp::close() {
-  if (listenSocket)
+  if (listenSocket) {
     listenSocket->close();
-  (*out) << "Stopped listening on port" << listenPort << "." << endl;
+    if (out) {
+      (*out) << "Stopped listening on port" << listenPort << "." << endl;
+    }
+  }
 }
 
 
