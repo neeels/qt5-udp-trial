@@ -10,7 +10,7 @@ Usually, you would just run 'make' in one of the subdirs.
 But at first, there are only qmake \*.pro files available.
 To get a first Makefile, go to a subdir and run
 
-    qmake -o Makefile \*.pro
+    qmake -o Makefile *.pro
 
 As soon as the first Makefile exists, simply running
 
