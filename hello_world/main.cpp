@@ -1,3 +1,5 @@
+/* Print "Hello World" to stdout. */
+
 #include <QTextStream>
 
 QTextStream out(stdout);
