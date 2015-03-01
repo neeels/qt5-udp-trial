@@ -13,6 +13,19 @@
 
 QTextStream out(stdout);
 
+void sendUdpDatagram(const char *toAddress, int port, QByteArray &datagram)
+{
+  QUdpSocket udpSocket;
+
+  out << "Sending to " << toAddress << ", port " << port << endl;
+
+  QHostAddress toAddressObj(toAddress);
+
+  int sent = udpSocket.writeDatagram(datagram, toAddressObj, port);
+
+  out << "Sent " << sent << " bytes." << endl;
+}
+
 int main(void) {
   int port = 1337;
 
@@ -46,7 +59,8 @@ int main(void) {
       out << "Redirect token: '" << redirectToken << "'" << endl;
 
       if (redirectToken.compare("FOO") == 0) {
-        out << "got FOO!" << endl;
+        sendUdpDatagram("127.0.0.1", 1338, datagram);
+        sendUdpDatagram("127.0.0.1", 1339, datagram);
       }
 
     }
