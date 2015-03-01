@@ -7,6 +7,7 @@ class SayHello : public QObject
 {
     Q_OBJECT
   public:
+    /*! \param out  Print any log output to this stream. */
     SayHello(QTextStream *out, QObject *parent = 0)
       : QObject(parent)
     {
@@ -17,6 +18,7 @@ class SayHello : public QObject
     QTextStream *out;
 
   public slots:
+    /*! Print "Hello Event" and emit signal finished(). */
     void run()
     {
         (*out) << "Hello Event" << endl;  
