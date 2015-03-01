@@ -34,7 +34,10 @@ int main(void) {
 
   QUdpSocket udpSocket;
 
-  udpSocket.bind(port);
+  if (! udpSocket.bind(port)) {
+    out << "Failed to bind to port " << port << endl;
+    return 1;
+  }
 
   out << "Listening on port " << port << endl;
 
