@@ -28,6 +28,7 @@ hello_event/hello_event
 receive_udp/receive_udp
 receive_udp_using_qt_events/receive_udp
 send_udp/send_udp
+bounce_udp/bounce_udp
 *.exe
 *.out
 *.app
