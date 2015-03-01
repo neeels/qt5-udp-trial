@@ -23,9 +23,9 @@
 *.lib
 
 # Executables
-hello_world
-hello_event
-receive_udp
+hello_world/hello_world
+hello_event/hello_event
+receive_udp/receive_udp
 *.exe
 *.out
 *.app
