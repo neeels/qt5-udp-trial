@@ -1,12 +1,12 @@
 /*
    Send a UDP datagram "Hello UDP" to localhost port 1337, using IPv4.
-   As UDP is unreliable, there will be no indication whether the datagram has
-   been received on the other end or not.
+   As UDP is unreliable by nature, there will be no indication whether the
+   datagram has been received on the other end or not.
 
    To test:
 
      # listen on UDP port 1337
-     nc -l -u 1337
+     nc -l -u -p 1337
 
      # in another terminal:
      ./send_udp
@@ -17,6 +17,9 @@
 
    To stop testing, hit Ctrl-C in the first terminal.
    send_udp will exit immediately after posting the UDP datagram.
+
+   Due to the nature of netcat, only one datagram will be received by the nc
+   command.
 
 */
 
