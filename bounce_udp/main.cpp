@@ -4,6 +4,64 @@
    listed strings, repost the entire datagram to the corresponding IP address,
    as listed. The list is hardcoded.
 
+   To test:
+
+     ./bounce_udp
+
+     # in another terminal:
+     netcat -l -u -p 1338
+
+     # in yet another terminal:
+     netcat -l -u -p 1339
+
+     # and in yet another terminal:
+     nc6 -l -u -p 1340
+
+     # and in the final terminal, send various datagrams:
+     netcat -u localhost 1337
+     # and then type:
+     FOO,1,2,3
+     BAR,asdf,asd,fasd,f
+
+     # in first terminal, this should print something like:
+     > ./bounce_udp 
+     Listening on port 1337
+
+     received 10 bytes:
+     [[[
+     FOO,1,2,3
+
+     ]]]
+     Redirect token: 'FOO'
+     Sending to 127.0.0.1, port 1338
+     Sent 10 bytes.
+     Sending to 127.0.0.1, port 1339
+     Sent 10 bytes.
+
+     received 20 bytes:
+     [[[
+     BAR,asdf,asd,fasd,f
+
+     ]]]
+     Redirect token: 'BAR'
+     Sending to ::1, port 1340
+     Sent 20 bytes.
+
+     received 9 bytes:
+     [[[
+     BAZ,lala
+
+     ]]]
+     Redirect token: 'BAZ'
+     Unknown redirect token. Ignoring datagram.
+
+     received 20 bytes:
+     [[[
+     the quick brown fox
+
+     ]]]
+     No redirect token in this datagram. Ignoring.
+
 */
 
 #include <QTextStream>
@@ -37,6 +95,8 @@ int main(void) {
   while (1){
 
     if (udpSocket.hasPendingDatagrams()) {
+      out << endl;
+
       const int size = udpSocket.pendingDatagramSize();
 
       QByteArray datagram(size, 0);
@@ -49,7 +109,7 @@ int main(void) {
       int tokenEnd = datagram.indexOf(',');
 
       if ((tokenEnd <= 0) || (tokenEnd >= datagram.size())) {
-        out << "No redirect token available." << endl;
+        out << "No redirect token in this datagram. Ignoring." << endl;
         continue;
       }
 
@@ -65,7 +125,9 @@ int main(void) {
       if (redirectToken.compare("BAR") == 0) {
         sendUdpDatagram("::1", 1340, datagram);
       }
-
+      else {
+        out << "Unknown redirect token. Ignoring datagram." << endl;
+      }
     }
     else {
       // don't eat CPU
