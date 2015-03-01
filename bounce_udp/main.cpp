@@ -4,7 +4,7 @@
    listed strings, repost the entire datagram to the corresponding IP address,
    as listed. The list is hardcoded.
 
-   To test:
+   To test, run the ./test.sh script, or run manually:
 
      ./bounce_udp
 
