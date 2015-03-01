@@ -9,7 +9,6 @@
 #include <QTextStream>
 #include <QUdpSocket>
 #include <QThread> // for usleep
-//#include <Redirect>
 
 QTextStream out(stdout);
 
