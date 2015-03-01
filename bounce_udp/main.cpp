@@ -70,6 +70,11 @@
 
 QTextStream out(stdout);
 
+/*! Send a UDP datagram.
+    /param toAddress  A numeric IP address to send to (IPv4 or IPv6).
+    /param port       Which port to send to.
+    /param datagram   The datagram data to send.
+ */
 void sendUdpDatagram(const char *toAddress, int port, QByteArray &datagram)
 {
   QUdpSocket udpSocket;
