@@ -6,17 +6,33 @@ UdpListener::UdpListener(QTextStream *out, int port,
 {
   this->out = out;
   this->port = port;
+  this->udpSocket = NULL;
+}
 
+bool UdpListener::bind() {
   udpSocket = new QUdpSocket(this);
-  udpSocket->bind(this->port);
+  Q_CHECK_PTR(udpSocket);
 
-  (*this->out) << "Listening on port " << this->port << endl;
+  if (! udpSocket->bind(port)) {
+    (*out) << "Cannot open port " << port << endl;
+    delete udpSocket;
+    udpSocket = NULL;
+    return false;
+  }
+
+  (*out) << "Listening on port " << this->port << endl;
 
   connect(udpSocket, SIGNAL(readyRead()),
           this, SLOT(receiveDatagram()));
+  return true;
 }
 
 void UdpListener::receiveDatagram() {
+  if (udpSocket == NULL) {
+    (*out) << "UdpListener: not bound to a socket. Forgot to call bind()?" << endl;
+    return;
+  }
+
   while (udpSocket->hasPendingDatagrams()) {
     QByteArray datagram(udpSocket->pendingDatagramSize(), 0);
 

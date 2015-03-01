@@ -33,6 +33,8 @@ int main(int argc, char *argv[]) {
 
   QTextStream out(stdout);
   UdpListener udpListener(&out, 1337);
+  if (! udpListener.bind())
+    return 1;
 
   return a.exec();
 }

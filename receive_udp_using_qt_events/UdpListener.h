@@ -12,6 +12,7 @@ class UdpListener : public QObject
     
     UdpListener(QTextStream *out, int port, QObject *parent=0);
 
+    bool bind();
     void close();
 
   private slots:
