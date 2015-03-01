@@ -1,3 +1,3 @@
 
-SOURCES += hello_world.cpp
+SOURCES += main.cpp
 
