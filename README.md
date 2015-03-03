@@ -1,7 +1,7 @@
 # qt5-udp-trial
 A quick trial in Qt5, from hello world to bouncing UDP datagrams.  None of
 these programs use a GUI. Some use a plain main loop, others use Qt's
-QApplicationCore event loop.
+QCoreApplication event loop.
 
 To learn what each program is about, read the top comment in each subdir's
 'main.cpp'.
