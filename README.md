@@ -1,5 +1,5 @@
 # qt5-udp-trial
-A quick trial in Qt5, from hello world to bouncing UDP datagrams.  None of
+A quick trial in Qt5, from hello world to bouncing UDP datagrams. None of
 these programs use a GUI. Some use a plain main loop, others use Qt's
 QCoreApplication event loop.
 
@@ -8,32 +8,25 @@ To learn what each program is about, read the top comment in each subdir's
 
 Usually, you would just run 'make' in one of the subdirs.
 But at first, there are only qmake \*.pro files available.
-To get a first Makefile, go to a subdir and run
+To generate Makefiles in all subdirs, simply run
 
-    qmake -o Makefile *.pro
+    qmake
 
-As soon as the first Makefile exists, simply running
+in the root folder. As soon as the first Makefiles exist, simply running
 
     make
 
-is sufficient to update and rebuild all targets, including the Makefile itself.
-For example:
-
-    cd hello_world
-    qmake -o Makefile *.pro
-    make
-    ./hello_world
+is sufficient to update and rebuild all targets, including the Makefiles
+themselves.
 
 Dependencies:
 
+- make
+- g++
 - qmake
 - Qt5
-- g++
 
-On debian, I did
-  
-    apt-get install qt5-default qt5-qmake g++
+On debian testing (2015-03-04), this was sufficient:
 
-(Some dependencies may still be missing in this list, but it seems to me that
-this is the minimal requirement.)
+    apt-get install make g++ qt5-default
 
