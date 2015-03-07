@@ -23,11 +23,9 @@
 
 */
 
-#include <QTextStream>
 #include <QUdpSocket>
 #include <QThread> // for usleep
-
-QTextStream out(stdout);
+#include <qiostream.h>
 
 int main(void) {
   int port = 1337;
@@ -35,11 +33,11 @@ int main(void) {
   QUdpSocket udpSocket;
 
   if (! udpSocket.bind(port)) {
-    out << "Failed to bind to port " << port << endl;
+    qerr << "*** Failed to bind to port " << port << endl;
     return 1;
   }
 
-  out << "Listening on port " << port << endl;
+  qout << "Listening on port " << port << endl;
 
   while (1){
 
@@ -50,8 +48,8 @@ int main(void) {
 
       int got = udpSocket.readDatagram(datagram.data(), datagram.size());
 
-      out << "received " << got << " bytes:" << endl;
-      out << "[[[\n" << datagram << "\n]]]" << endl;
+      qout << "received " << got << " bytes:" << endl;
+      qout << "[[[\n" << datagram << "\n]]]" << endl;
 
     }
     else {
@@ -64,7 +62,7 @@ int main(void) {
   // todo: catch ctrl-C and close socket gracefully
 
   udpSocket.close();
-  out << "Stopped listening." << endl;
+  qout << "Stopped listening." << endl;
 
   return 0;
 }
