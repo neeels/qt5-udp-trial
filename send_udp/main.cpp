@@ -23,23 +23,25 @@
 
 */
 
-#include <QTextStream>
 #include <QUdpSocket>
 #include <QHostAddress>
-
-QTextStream out(stdout);
+#include <qiostream.h>
 
 int main(void) {
   int port = 1337;
 
   QUdpSocket udpSocket;
 
-  out << "Sending to localhost, port " << port << endl;
+  qout << "Sending to localhost, port " << port << endl;
 
   QByteArray helloUdp("Hello UDP\n");
   int sent = udpSocket.writeDatagram(helloUdp, QHostAddress::LocalHost, port);
 
-  out << "Sent " << sent << " bytes." << endl;
+  qout << "Sent " << sent << " bytes." << endl;
+
+  if (sent != helloUdp.size()) {
+    qerr << "*** Mismatch: datagram size = " << helloUdp.size() << ", sent bytes = " << sent << endl;
+  }
 
   return 0;
 }
