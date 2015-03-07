@@ -64,11 +64,10 @@
 
 */
 
-#include <QTextStream>
+#include <qiostream.h>
 #include <QUdpSocket>
 #include <QThread> // for usleep
 
-QTextStream out(stdout);
 
 /*! Send a UDP datagram.
     /param toAddress  A numeric IP address to send to (IPv4 or IPv6).
@@ -79,13 +78,17 @@ void sendUdpDatagram(const char *toAddress, int port, QByteArray &datagram)
 {
   QUdpSocket udpSocket;
 
-  out << "Sending to " << toAddress << ", port " << port << endl;
+  qout << "Sending to " << toAddress << ", port " << port << endl;
 
   QHostAddress toAddressObj(toAddress);
 
   int sent = udpSocket.writeDatagram(datagram, toAddressObj, port);
 
-  out << "Sent " << sent << " bytes." << endl;
+  qout << "Sent " << sent << " bytes." << endl;
+
+  if (sent != datagram.size()) {
+    qerr << "*** Mismatch: datagram size = " << datagram.size() << ", sent bytes = " << sent << endl;
+  }
 }
 
 int main(void) {
@@ -94,16 +97,16 @@ int main(void) {
   QUdpSocket udpSocket;
 
   if (! udpSocket.bind(port)) {
-    out << "Failed to bind to port " << port << endl;
+    qerr << "*** Failed to bind to port " << port << endl;
     return 1;
   }
 
-  out << "Listening on port " << port << endl;
+  qout << "Listening on port " << port << endl;
 
   while (1){
 
     if (udpSocket.hasPendingDatagrams()) {
-      out << endl;
+      qout << endl;
 
       const int size = udpSocket.pendingDatagramSize();
 
@@ -111,19 +114,19 @@ int main(void) {
 
       int got = udpSocket.readDatagram(datagram.data(), datagram.size());
 
-      out << "received " << got << " bytes:" << endl;
-      out << "[[[\n" << datagram << "\n]]]" << endl;
+      qout << "received " << got << " bytes:" << endl;
+      qout << "[[[\n" << datagram << "\n]]]" << endl;
 
       int tokenEnd = datagram.indexOf(',');
 
       if ((tokenEnd <= 0) || (tokenEnd >= datagram.size())) {
-        out << "No redirect token in this datagram. Ignoring." << endl;
+        qout << "No redirect token in this datagram. Ignoring." << endl;
         continue;
       }
 
       QByteArray redirectTokenBytes(datagram.data(), tokenEnd);
       QString redirectToken(redirectTokenBytes);
-      out << "Redirect token: '" << redirectToken << "'" << endl;
+      qout << "Redirect token: '" << redirectToken << "'" << endl;
 
       if (redirectToken.compare("FOO") == 0) {
         sendUdpDatagram("127.0.0.1", 1338, datagram);
@@ -134,7 +137,7 @@ int main(void) {
         sendUdpDatagram("::1", 1340, datagram);
       }
       else {
-        out << "Unknown redirect token. Ignoring datagram." << endl;
+        qout << "Unknown redirect token. Ignoring datagram." << endl;
       }
     }
     else {
@@ -147,7 +150,7 @@ int main(void) {
   // todo: catch ctrl-C and close socket gracefully
 
   udpSocket.close();
-  out << "Stopped listening." << endl;
+  qout << "Stopped listening." << endl;
 
   return 0;
 }
