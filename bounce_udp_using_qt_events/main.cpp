@@ -65,17 +65,15 @@
 */
 
 #include <QCoreApplication>
-#include <QTextStream>
+#include "qiostream.h"
 #include "BounceUdp.h"
-
 
 int main(int argc, char *argv[]) {
   QCoreApplication a(argc, argv);
 
   int port = 1337;
 
-  QTextStream out(stdout);
-  BounceUdp bounceUdp(&out, port);
+  BounceUdp bounceUdp(port);
   if (! bounceUdp.bind())
     return 1;
 

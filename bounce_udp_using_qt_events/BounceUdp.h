@@ -2,7 +2,6 @@
 #define BOUNCE_UDP_H_2015
 
 #include <QUdpSocket>
-#include <QTextStream>
 
 class BounceUdp : public QObject
 {
@@ -10,10 +9,9 @@ class BounceUdp : public QObject
 
   public:
     
-    /*! \param out  Print any log output to this stream.
-        \param listenPort  Port number to listen on (on "any" localhost IPs).
+    /*! \param listenPort  Port number to listen on (on "any" localhost IPs).
      */
-    BounceUdp(QTextStream *out, int listenPort, QObject *parent=0);
+    BounceUdp(int listenPort, QObject *parent=0);
 
     ~BounceUdp();
 
@@ -33,7 +31,6 @@ class BounceUdp : public QObject
     void receiveDatagram();
 
   private:
-    QTextStream *out;
     int listenPort;
     QUdpSocket *listenSocket;
     QUdpSocket sendSocket;
