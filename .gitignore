@@ -41,4 +41,4 @@ bounce_udp_using_qt_events/bounce_udp
 Makefile
 moc_*.h
 moc_*.cpp
-qiostream/lib*.so*
+qiostream/lib*.{a,so}*
