@@ -1,10 +1,10 @@
+#include <qiostream.h>
 #include "UdpListener.h"
 
-UdpListener::UdpListener(QTextStream *out, int port,
+UdpListener::UdpListener(int port,
                          QObject *parent)
   : QObject(parent)
 {
-  this->out = out;
   this->port = port;
   this->udpSocket = NULL;
 }
@@ -14,13 +14,13 @@ bool UdpListener::bind() {
   Q_CHECK_PTR(udpSocket);
 
   if (! udpSocket->bind(port)) {
-    (*out) << "Cannot open port " << port << endl;
+    qerr << "*** Cannot open port " << port << endl;
     delete udpSocket;
     udpSocket = NULL;
     return false;
   }
 
-  (*out) << "Listening on port " << this->port << endl;
+  qout << "Listening on port " << this->port << endl;
 
   connect(udpSocket, SIGNAL(readyRead()),
           this, SLOT(receiveDatagram()));
@@ -29,7 +29,7 @@ bool UdpListener::bind() {
 
 void UdpListener::receiveDatagram() {
   if (udpSocket == NULL) {
-    (*out) << "UdpListener: not bound to a socket. Forgot to call bind()?" << endl;
+    qerr << "*** UdpListener: not bound to a socket. Forgot to call bind()?" << endl;
     return;
   }
 
@@ -38,14 +38,14 @@ void UdpListener::receiveDatagram() {
 
     int got = udpSocket->readDatagram(datagram.data(), datagram.size());
 
-    (*out) << "received " << got << " bytes:" << endl;
-    (*out) << "[[[\n" << datagram << "\n]]]" << endl;
+    qout << "received " << got << " bytes:" << endl;
+    qout << "[[[\n" << datagram << "\n]]]" << endl;
   }
 }
 
 void UdpListener::close() {
   udpSocket->close();
-  (*out) << "Stopped listening on port" << port << "." << endl;
+  qout << "Stopped listening on port" << port << "." << endl;
 }
 
 

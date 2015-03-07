@@ -2,7 +2,6 @@
 #define UDP_LISTENER_H_2015
 
 #include <QUdpSocket>
-#include <QTextStream>
 
 class UdpListener : public QObject
 {
@@ -13,7 +12,7 @@ class UdpListener : public QObject
     /*! \param out  Print any log output to this stream.
         \param port  Port number to listen on (on "any" localhost IPs).
      */
-    UdpListener(QTextStream *out, int port, QObject *parent=0);
+    UdpListener(int port, QObject *parent=0);
 
     /*! Open a socket. Return false if binding to the socket failed.
         The socket is managed internally.
@@ -30,7 +29,6 @@ class UdpListener : public QObject
     void receiveDatagram();
 
   private:
-    QTextStream *out;
     int port;
     QUdpSocket *udpSocket;
 

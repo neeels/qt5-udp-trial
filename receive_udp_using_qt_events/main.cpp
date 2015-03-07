@@ -24,15 +24,13 @@
 */
 
 #include <QCoreApplication>
-#include <QTextStream>
 #include "UdpListener.h"
 
 
 int main(int argc, char *argv[]) {
   QCoreApplication a(argc, argv);
 
-  QTextStream out(stdout);
-  UdpListener udpListener(&out, 1337);
+  UdpListener udpListener(1337);
   if (! udpListener.bind())
     return 1;
 
