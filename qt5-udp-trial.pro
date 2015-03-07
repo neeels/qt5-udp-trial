@@ -1,5 +1,6 @@
 TEMPLATE = subdirs
 SUBDIRS = \
+    qiostream \
     hello_world \
     hello_event \
     send_udp \

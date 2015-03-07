@@ -2,8 +2,8 @@ QT += core
 QT += network
 TARGET = bounce_udp
 
-HEADERS += qiostream.h
-SOURCES += qiostream.cpp
+INCLUDEPATH += ../qiostream
+LIBS += -L../qiostream -lqiostream
 
 HEADERS += BounceUdp.h
 SOURCES += BounceUdp.cpp

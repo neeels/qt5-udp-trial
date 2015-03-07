@@ -65,7 +65,7 @@
 */
 
 #include <QCoreApplication>
-#include "qiostream.h"
+#include <qiostream.h>
 #include "BounceUdp.h"
 
 int main(int argc, char *argv[]) {
