@@ -4,9 +4,13 @@
 #include <signal.h>
 #include <QObject>
 
-/*! Receive operating system signals like SIGINT. Since receiveOsSignal is
- * called from a signal handler routine, this function cannot trigger Qt events
- * to class instance slots. Instead, a flag can be set and handled later.
+/*! Receive operating system signals like SIGINT.
+ *
+ * Since receiveOsSignal is called from a signal handler routine, this function
+ * cannot reliably trigger Qt events to class instance slots. Instead, a flag
+ * can be set and handled later. Incidentally, sending the QCoreApplication a
+ * signal to the quit slot effectively exits the Qt event loop if no other
+ * tasks are running.
  *
  * This works only for POSIX systems (like Linux), and only one
  * QOsSignalHandler can be used in a running program (see global_handler).
