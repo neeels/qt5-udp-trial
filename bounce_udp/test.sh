@@ -9,11 +9,13 @@ recv1340="$(tempfile)"
 # start UDP bouncer as well as three netcat listeners for the bounced
 # datagrams.
 ./bounce_udp >"$bounce_log" 2>&1 &
+
+
 nc -4 --recv-only -u -l -p 1338 > "$recv1338" &
 nc -4 --recv-only -u -l -p 1339 > "$recv1339" &
 nc -6 --recv-only -u -l -p 1340 > "$recv1340" &
 
-sleep 1
+sleep .5
 
 # send datagrams to the bouncer. sleep so they are guaranteed to arrive in the
 # expected order for below test output verification.
@@ -28,6 +30,17 @@ sleep .1
 echo "BAZ,7,8,9,v4" | nc -4 --send-only -u 127.0.0.1 1337
 sleep .1
 
+# kill the three receiving netcats
+kill %2 %3 %4
+
+# reopen receiving netcats for IPv6 test.
+# (This is necessary to make sure netcat is still receiving.)
+nc -4 --recv-only -u -l -p 1338 >> "$recv1338" &
+nc -4 --recv-only -u -l -p 1339 >> "$recv1339" &
+nc -6 --recv-only -u -l -p 1340 >> "$recv1340" &
+
+sleep .5
+
 # send using IPv6
 echo "Hello UDP v6" | nc -6 --send-only -u ::1 1337
 sleep .1
@@ -37,7 +50,7 @@ echo "BAR,4,5,6,v6" | nc -6 --send-only -u ::1 1337
 sleep .1
 echo "BAZ,7,8,9,v6" | nc -6 --send-only -u ::1 1337
 
-sleep 1
+sleep .5
 
 # kill bounce_udp and the three receiving netcats
 kill %1 %2 %3 %4
