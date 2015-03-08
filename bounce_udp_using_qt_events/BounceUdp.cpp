@@ -1,5 +1,5 @@
 #include <QtGlobal>
-#include <qiostream.h>
+#include <qiostream>
 #include "BounceUdp.h"
 
 BounceUdp::BounceUdp(int listenPort,

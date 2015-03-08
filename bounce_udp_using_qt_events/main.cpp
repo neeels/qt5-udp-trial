@@ -10,7 +10,7 @@
 #include <string.h>
 #include <QCoreApplication>
 #include <QtCore>
-#include <qiostream.h>
+#include <qiostream>
 #include <QOsSignalReceiver>
 #include "BounceUdp.h"
 

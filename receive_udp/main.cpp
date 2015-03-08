@@ -25,7 +25,7 @@
 
 #include <QUdpSocket>
 #include <QThread> // for usleep
-#include <qiostream.h>
+#include <qiostream>
 
 int main(void) {
   int port = 1337;
