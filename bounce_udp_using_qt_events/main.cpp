@@ -81,7 +81,7 @@ class RecvSignals : public QOsSignalReceiver
 
     virtual void receiveOsSignal(int signal)
     {
-      qout << "\n" << strsignal(signal) << " signal received." << endl;
+      qout << "\nSignal received: '" << strsignal(signal) << "'." << endl;
       QTimer::singleShot(0, core, SLOT(quit()));
     }
 
