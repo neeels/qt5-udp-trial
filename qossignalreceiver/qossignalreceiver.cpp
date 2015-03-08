@@ -10,6 +10,12 @@ QOsSignalReceiver::QOsSignalReceiver(QObject *parent) : QObject(parent)
   QOsSignalReceiver::global_handler = this;
 }
 
+QOsSignalReceiver::~QOsSignalReceiver()
+{
+  if (QOsSignalReceiver::global_handler == this)
+    QOsSignalReceiver::global_handler = NULL;
+}
+
 void handler(int sig)
 {
   if (QOsSignalReceiver::global_handler)

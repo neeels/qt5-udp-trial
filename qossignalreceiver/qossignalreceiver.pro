@@ -2,6 +2,9 @@ TEMPLATE = lib
 
 CONFIG += staticlib
 
-HEADERS += qossignalreceiver.h
-SOURCES += qossignalreceiver.cpp
+INCLUDEPATH += ../qiostream
+LIBS += -L../qiostream -lqiostream
+
+HEADERS += qossignalreceiver.h qosquit.h
+SOURCES += qossignalreceiver.cpp qosquit.cpp
 

@@ -46,6 +46,7 @@ class QOsSignalReceiver : public QObject
   public:
 
     QOsSignalReceiver(QObject *parent=0);
+    ~QOsSignalReceiver();
 
     /*! Register the OS signal handler to call receiveOsSignal for the given
      * signal number.
