@@ -25,7 +25,7 @@
 
 #include <QUdpSocket>
 #include <QHostAddress>
-#include <qiostream>
+#include <qiostream.h>
 
 int main(void) {
   int port = 1337;

@@ -64,7 +64,7 @@
 
 */
 
-#include <qiostream>
+#include <qiostream.h>
 #include <QUdpSocket>
 #include <QThread> // for usleep
 

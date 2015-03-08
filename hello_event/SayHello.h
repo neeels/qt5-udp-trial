@@ -1,7 +1,7 @@
 #ifndef SAY_HELLO_H_2015
 #define SAY_HELLO_H_2015
 
-#include <qiostream>
+#include <qiostream.h>
 
 class SayHello : public QObject
 {

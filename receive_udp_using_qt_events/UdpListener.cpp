@@ -1,4 +1,4 @@
-#include <qiostream>
+#include <qiostream.h>
 #include "UdpListener.h"
 
 UdpListener::UdpListener(int port,
