@@ -1,43 +1,81 @@
 Listening on port 1337
 
-received 10 bytes:
+received 13 bytes:
 [[[
-Hello UDP
+Hello UDP v4
 
 ]]]
 No redirect token in this datagram. Ignoring.
 
-received 10 bytes:
+received 13 bytes:
 [[[
-FOO,1,2,3
+FOO,1,2,3,v4
 
 ]]]
 Redirect token: 'FOO'
 Sending to 127.0.0.1, port 1338
-Sent 10 bytes.
+Sent 13 bytes.
 Sending to 127.0.0.1, port 1339
-Sent 10 bytes.
+Sent 13 bytes.
 
-received 10 bytes:
+received 13 bytes:
 [[[
-BAR,4,5,6
+BAR,4,5,6,v4
 
 ]]]
 Redirect token: 'BAR'
 Sending to ::1, port 1340
-Sent 10 bytes.
+Sent 13 bytes.
 
-received 10 bytes:
+received 13 bytes:
 [[[
-BAZ,7,8,9
+BAZ,7,8,9,v4
+
+]]]
+Redirect token: 'BAZ'
+Unknown redirect token. Ignoring datagram.
+
+received 13 bytes:
+[[[
+Hello UDP v6
+
+]]]
+No redirect token in this datagram. Ignoring.
+
+received 13 bytes:
+[[[
+FOO,1,2,3,v6
+
+]]]
+Redirect token: 'FOO'
+Sending to 127.0.0.1, port 1338
+Sent 13 bytes.
+Sending to 127.0.0.1, port 1339
+Sent 13 bytes.
+
+received 13 bytes:
+[[[
+BAR,4,5,6,v6
+
+]]]
+Redirect token: 'BAR'
+Sending to ::1, port 1340
+Sent 13 bytes.
+
+received 13 bytes:
+[[[
+BAZ,7,8,9,v6
 
 ]]]
 Redirect token: 'BAZ'
 Unknown redirect token. Ignoring datagram.
 -----eof-----
-FOO,1,2,3
+FOO,1,2,3,v4
+FOO,1,2,3,v6
 -----eof-----
-FOO,1,2,3
+FOO,1,2,3,v4
+FOO,1,2,3,v6
 -----eof-----
-BAR,4,5,6
+BAR,4,5,6,v4
+BAR,4,5,6,v6
 -----eof-----
