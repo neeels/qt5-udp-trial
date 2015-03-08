@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 SUBDIRS = \
     qiostream \
+    qossignalreceiver \
     hello_world \
     hello_event \
     send_udp \
