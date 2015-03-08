@@ -6,25 +6,41 @@ recv1338="$(tempfile)"
 recv1339="$(tempfile)"
 recv1340="$(tempfile)"
 
+# start UDP bouncer as well as three netcat listeners for the bounced
+# datagrams.
 ./bounce_udp >"$bounce_log" 2>&1 &
-nc -4 -u -l -p 1338 > "$recv1338" &
-nc -4 -u -l -p 1339 > "$recv1339" &
-nc -6 -u -l -p 1340 > "$recv1340" &
+nc -4 --recv-only -u -l -p 1338 > "$recv1338" &
+nc -4 --recv-only -u -l -p 1339 > "$recv1339" &
+nc -6 --recv-only -u -l -p 1340 > "$recv1340" &
 
 sleep 1
 
-# netcat refuses to exit by itself, so I background it and kill later.
-echo "Hello UDP" | nc -4 -u localhost 1337 &
-sleep .5
-echo "FOO,1,2,3" | nc -4 -u localhost 1337 &
-sleep .5
-echo "BAR,4,5,6" | nc -4 -u localhost 1337 &
-sleep .5
-echo "BAZ,7,8,9" | nc -4 -u localhost 1337 &
+# send datagrams to the bouncer. sleep so they are guaranteed to arrive in the
+# expected order for below test output verification.
+
+# send using IPv4
+echo "Hello UDP v4" | nc -4 --send-only -u 127.0.0.1 1337
+sleep .1
+echo "FOO,1,2,3,v4" | nc -4 --send-only -u 127.0.0.1 1337
+sleep .1
+echo "BAR,4,5,6,v4" | nc -4 --send-only -u 127.0.0.1 1337
+sleep .1
+echo "BAZ,7,8,9,v4" | nc -4 --send-only -u 127.0.0.1 1337
+sleep .1
+
+# send using IPv6
+echo "Hello UDP v6" | nc -6 --send-only -u ::1 1337
+sleep .1
+echo "FOO,1,2,3,v6" | nc -6 --send-only -u ::1 1337
+sleep .1
+echo "BAR,4,5,6,v6" | nc -6 --send-only -u ::1 1337
+sleep .1
+echo "BAZ,7,8,9,v6" | nc -6 --send-only -u ::1 1337
 
 sleep 1
 
-kill %1 %2 %3 %4 %5 %6 %7 %8
+# kill bounce_udp and the three receiving netcats
+kill %1 %2 %3 %4
 
 results="$(tempfile)"
 echo "results file: $results"
