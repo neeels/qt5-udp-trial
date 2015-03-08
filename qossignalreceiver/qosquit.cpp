@@ -1,5 +1,5 @@
 #include <string.h>
-#include <qiostream>
+#include <qiostream.h>
 
 #include <qosquit.h>
 
