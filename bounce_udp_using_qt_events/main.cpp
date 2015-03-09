@@ -42,6 +42,10 @@ int main(int argc, char *argv[]) {
 
   BounceUdp bounceUdp(port, &a);
 
+  bounceUdp.addTarget("FOO", "127.0.0.1", 1339);
+  bounceUdp.addTarget("FOO", "127.0.0.1", 1338);
+  bounceUdp.addTarget("BAR", "::1", 1340);
+
   if (! bounceUdp.bind())
     return 1;
 

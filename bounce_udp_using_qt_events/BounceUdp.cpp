@@ -84,28 +84,25 @@ void BounceUdp::receiveDatagram() {
     QString redirectToken(redirectTokenBytes);
     qout << "Redirect token: '" << redirectToken << "'" << endl;
 
-    if (redirectToken.compare("FOO") == 0) {
-      sendUdpDatagram("127.0.0.1", 1338, datagram);
-      sendUdpDatagram("127.0.0.1", 1339, datagram);
-    }
-    else
-    if (redirectToken.compare("BAR") == 0) {
-      sendUdpDatagram("::1", 1340, datagram);
+    QList<BounceUdpTarget> target_addrs = targets.values(redirectToken);
+
+    if (target_addrs.size() < 1) {
+      qout << "Unknown redirect token. Ignoring datagram." << endl;
     }
     else {
-      qout << "Unknown redirect token. Ignoring datagram." << endl;
+      for (int i = 0; i < target_addrs.size(); i ++) {
+        sendUdpDatagram(target_addrs.at(i), datagram);
+      }
     }
   }
 }
 
-void BounceUdp::sendUdpDatagram(const char *toAddress, int port, QByteArray &datagram)
+void BounceUdp::sendUdpDatagram(const BounceUdpTarget &target, QByteArray &datagram)
 {
 
-  qout << "Sending to " << toAddress << ", port " << port << endl;
+  qout << "Sending to " << target.addr.toString() << ", port " << target.port << endl;
 
-  QHostAddress toAddressObj(toAddress);
-
-  int sent = sendSocket.writeDatagram(datagram, toAddressObj, port);
+  int sent = sendSocket.writeDatagram(datagram, target.addr, target.port);
 
   qout << "Sent " << sent << " bytes." << endl;
 
@@ -123,3 +120,11 @@ void BounceUdp::close() {
 }
 
 
+void BounceUdp::addTarget(const char *id, const char *target_addr,
+                          int target_port)
+{
+  BounceUdpTarget t;
+  t.addr.setAddress(target_addr);
+  t.port = target_port;
+  targets.insert(id, t);
+}

@@ -23,6 +23,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define BOUNCE_UDP_H_2015
 
 #include <QUdpSocket>
+#include <QMultiMap>
+
+typedef struct {
+  QHostAddress addr;
+  int port;
+} BounceUdpTarget;
 
 class BounceUdp : public QObject
 {
@@ -35,6 +41,13 @@ class BounceUdp : public QObject
     BounceUdp(int listenPort, QObject *parent=0);
 
     ~BounceUdp();
+
+    /*! Add a bounce target to send datagrams to.
+        The first bytes up to the first ',' character of each
+        datagram is interpreted as an id. If a datagram id matches
+        the given @param id, forward the datagram to IP address
+        @param target_addr and port @param target_port. */
+    void addTarget(const char *id, const char *target_addr, int target_port);
 
     /*! Open a socket. Return false if binding to the socket failed.
         The socket is managed internally.
@@ -56,7 +69,9 @@ class BounceUdp : public QObject
     QUdpSocket *listenSocket;
     QUdpSocket sendSocket;
 
-    void sendUdpDatagram(const char *toAddress, int port, QByteArray &datagram);
+    QMultiMap<QString, BounceUdpTarget> targets;
+
+    void sendUdpDatagram(const BounceUdpTarget &target, QByteArray &datagram);
 
 };
 
