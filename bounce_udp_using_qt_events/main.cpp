@@ -40,8 +40,9 @@ int main(int argc, char *argv[]) {
 
   int port = 1337;
 
-  BounceUdp *bounceUdp = new BounceUdp(port, &a);
-  if (! bounceUdp->bind())
+  BounceUdp bounceUdp(port, &a);
+
+  if (! bounceUdp.bind())
     return 1;
 
   return a.exec();
