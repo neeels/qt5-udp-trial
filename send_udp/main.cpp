@@ -1,26 +1,45 @@
 /*
-   Send a UDP datagram "Hello UDP" to localhost port 1337, using IPv4.
-   As UDP is unreliable by nature, there will be no indication whether the
-   datagram has been received on the other end or not.
+Send a UDP datagram "Hello UDP" to localhost port 1337, using IPv4.
+As UDP is unreliable by nature, there will be no indication whether the
+datagram has been received on the other end or not.
 
-   To test:
+To test:
 
-     # listen on UDP port 1337
-     nc -l -u -p 1337
+    # listen on UDP port 1337
+    nc -l -u -p 1337
 
-     # in another terminal:
-     ./send_udp
+    # in another terminal:
+    ./send_udp
 
-     # should print in first terminal:
-     > ./send_udp
-     Hello UDP
+    # should print in first terminal:
+    > ./send_udp
+    Hello UDP
 
-   To stop testing, hit Ctrl-C in the first terminal.
-   send_udp will exit immediately after posting the UDP datagram.
+To stop testing, hit Ctrl-C in the first terminal.
+send_udp will exit immediately after posting the UDP datagram.
 
-   Due to the nature of netcat, only one datagram will be received by the nc
-   command.
+Due to the nature of netcat, only one datagram will be received by the nc
+command.
 
+This file is part of qt5-udp-trial,
+a short trial in Qt5 basics and networking API (no GUI)
+Copyright (C) 2015  Neels Hofmeyr
+http://hofmeyr.de
+http://github.com/neeels/qt5-udp-trial
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <QUdpSocket>
