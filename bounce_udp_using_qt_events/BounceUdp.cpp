@@ -118,7 +118,7 @@ void BounceUdp::sendUdpDatagram(const char *toAddress, int port, QByteArray &dat
 void BounceUdp::close() {
   if (listenSocket) {
     listenSocket->close();
-    qout << "Stopped listening on port" << listenPort << "." << endl;
+    qout << "Stopped listening on port " << listenPort << "." << endl;
   }
 }
 
