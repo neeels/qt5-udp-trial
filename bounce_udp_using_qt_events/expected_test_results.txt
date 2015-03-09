@@ -71,7 +71,7 @@ Redirect token: 'BAZ'
 Unknown redirect token. Ignoring datagram.
 
 Signal received: 'Terminated'.
-Stopped listening on port1337.
+Stopped listening on port 1337.
 -----eof-----
 FOO,1,2,3,v4
 FOO,1,2,3,v6
