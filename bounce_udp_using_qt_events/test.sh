@@ -53,7 +53,7 @@ echo "BAZ,7,8,9,v6" | nc -6 --send-only -u ::1 1337
 sleep .5
 
 # kill bounce_udp and the three receiving netcats
-kill %1 %2 %3 %4
+kill %1 %5 %6 %7
 
 results="$(tempfile)"
 echo "results file: $results"
