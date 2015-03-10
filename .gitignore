@@ -31,6 +31,7 @@ receive_udp_using_qt_events/receive_udp
 send_udp/send_udp
 bounce_udp_polling/bounce_udp
 bounce_udp_using_qt_events/bounce_udp
+list_test/list_test
 *.exe
 *.out
 *.app
