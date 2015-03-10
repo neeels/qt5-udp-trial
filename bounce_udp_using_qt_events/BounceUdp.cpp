@@ -84,15 +84,16 @@ void BounceUdp::receiveDatagram() {
     QString redirectToken(redirectTokenBytes);
     qout << "Redirect token: '" << redirectToken << "'" << endl;
 
-    QList<BounceUdpTarget> target_addrs = targets.values(redirectToken);
+    QMultiMap<QString, BounceUdpTarget>::iterator it = targets.find(redirectToken);
+    if (it != targets.end() && it.key() == redirectToken) {
+      do {
+        sendUdpDatagram(it.value(), datagram);
 
-    if (target_addrs.size() < 1) {
-      qout << "Unknown redirect token. Ignoring datagram." << endl;
+        ++ it;
+      } while (it != targets.end() && it.key() == redirectToken);
     }
     else {
-      for (int i = 0; i < target_addrs.size(); i ++) {
-        sendUdpDatagram(target_addrs.at(i), datagram);
-      }
+      qout << "Unknown redirect token. Ignoring datagram." << endl;
     }
   }
 }
